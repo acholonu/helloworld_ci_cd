@@ -22,7 +22,11 @@ jobs:
     docker:
       - image: circleci/node:13.8.0
     steps:
-      - run: echo The author of this project is $AUTHOR #Project level environment variable
+      - checkout # Checks out the source code. Common to have this in all jobs in CI.
+      - run: 
+          name: "Echo Author Name" # name of the step
+          command: |
+            echo The author of this project is $AUTHOR
 workflows:
   # Name the workflow "welcome"
   welcome:
