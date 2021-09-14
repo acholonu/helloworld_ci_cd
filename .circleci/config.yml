@@ -12,15 +12,18 @@ jobs:
       - image: circleci/node:13.8.0
     # The actions to take in a job
     steps:
+    # Notice that I didn't add the name of the step here, so can't see it in the pipeline
       - run: echo hello
   print_world:
     docker:
       - image: circleci/node:13.8.0
     steps:
-      - run: echo world
+      - run: 
+          name: "Echo World"
+          command: echo world
   print_author:
     docker:
-      - image: circleci/node:13.8.0
+      - image: cimg/base:2020.01 #Used a different container image
     steps:
       - checkout # Checks out the source code. Common to have this in all jobs in CI.
       - run: 
