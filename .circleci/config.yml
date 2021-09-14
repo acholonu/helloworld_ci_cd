@@ -7,8 +7,10 @@ orbs:
 # Orchestrate or schedule a set of jobs
 jobs:
   print_hello:
+    #The contain that holds the computing environment
     docker:
       - image: circleci/node:13.8.0
+    # The actions to take in a job
     steps:
       - run: echo hello
   print_world:
@@ -16,13 +18,19 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - run: echo world
+  print_author:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - run: echo The author of this project is $AUTHOR #Project level environment variable
 workflows:
   # Name the workflow "welcome"
   welcome:
     # Run the welcome/run job in its own container
     jobs:
       - welcome/run
+      - print_author
       - print_hello
       - print_world:
-          requires:
+          requires: # Defines the order (DAG)
             - print_hello
