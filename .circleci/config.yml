@@ -30,6 +30,16 @@ jobs:
           name: "Echo Author Name" # name of the step
           command: |
             echo The author of this project is $AUTHOR
+  #practicing sharing data with cache and workspaces
+  save_hello_world_output:
+    docker:
+      - image: alpine:latest
+    steps:
+      - checkout
+      - run:
+          name: "Practice Cache"
+          command: |
+            echo "Hello world. We are testing workspaces. Should be available for 15 days" > output.txt
 workflows:
   # Name the workflow "welcome"
   welcome:
