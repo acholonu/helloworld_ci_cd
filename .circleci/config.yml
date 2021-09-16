@@ -61,6 +61,19 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - print_pipeline_id
+  # Fail on purpose job
+  fail_on_purpose:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - run:
+          name: Return Non Zero 
+          command: return 1 # Because we are returning a non-zero this step will automatically fail
+      - run:
+          name: Handle Test Failure
+          command: echo "Failure occurred, but it has been handled."
+          when: on_fail # this step is only run on a failure.
+
 workflows:
   # Name the workflow "welcome"
   welcome:
@@ -77,3 +90,4 @@ workflows:
           requires:
             - save_hello_world_output
       - job_print_pipeline_id
+      - fail_on_purpose
