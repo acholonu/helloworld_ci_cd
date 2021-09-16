@@ -49,15 +49,15 @@ jobs:
       - persist_to_workspace:
           root: ~/ # This path should be the same as the path specified in the `at` argument for attach_workspace, if you want access a file from that root path.``
           paths:
-            - "~/output.txt"
+            - "output.txt"
   print_output_file:
     docker:
       - image: alpine:latest
     steps:
-      - checkout
+      #- checkout
       - attach_workspace:
           at: ~/
-      - run: cat ~/output.txt
+      - run: cat output.txt
   job_print_pipeline_id:
     docker:
       - image: circleci/node:13.8.0
