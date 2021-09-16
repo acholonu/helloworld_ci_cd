@@ -31,15 +31,28 @@ jobs:
           command: |
             echo The author of this project is $AUTHOR
   #practicing sharing data with cache and workspaces
+  # Persisting data resource: https://circleci.com/docs/2.0/persist-data/#using-workspaces
   save_hello_world_output:
     docker:
       - image: alpine:latest
     steps:
       - checkout
       - run:
-          name: "Practice Cache"
+          name: "Create Output File"
           command: |
-            echo "Hello world. We are testing workspaces. Should be available for 15 days" > output.txt
+            echo "Hello world. We are testing workspaces. Should be available for 15 days" > ~/output.txt
+      - persist_to_workspace:
+          root: ~/ # This path should be the same as the path specified in the `at` argument for attach_workspace, if you want access a file from that root path.``
+          paths:
+            - "output.txt"
+  print_output_file:
+    docker:
+      - image: alpine:latest
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/
+      - run: cat ~/output.txt
 workflows:
   # Name the workflow "welcome"
   welcome:
@@ -51,3 +64,5 @@ workflows:
       - print_world:
           requires: # Defines the order (DAG)
             - print_hello
+      - save_hello_world_output
+      - print_output_file
