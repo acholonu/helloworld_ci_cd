@@ -41,7 +41,6 @@ jobs:
     docker:
       - image: alpine:latest
     steps:
-      #- checkout
       - run:
           name: "Create Output File"
           command: |
@@ -54,7 +53,6 @@ jobs:
     docker:
       - image: alpine:latest
     steps:
-      #- checkout
       - attach_workspace:
           at: ~/
       - run: cat ~/output.txt
@@ -75,5 +73,7 @@ workflows:
           requires: # Defines the order (DAG)
             - print_hello
       - save_hello_world_output
-      - print_output_file
+      - print_output_file:
+          requires:
+            - save_hello_world_output
       - job_print_pipeline_id
