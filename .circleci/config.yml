@@ -41,7 +41,7 @@ jobs:
     docker:
       - image: alpine:latest
     steps:
-      - checkout
+      #- checkout
       - run:
           name: "Create Output File"
           command: |
